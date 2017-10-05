@@ -7,6 +7,7 @@ alphabet = list(string.ascii_lowercase)
 
 
 def load_word():
+    """Load secret word."""
     f = open('words.txt', 'r')
     wordsList = f.readlines()
     f.close()
@@ -17,6 +18,8 @@ def load_word():
 
 
 def check_word(secret_word, letter):
+    """Check if the letter is part of the secret word."""
+    """Return array of 1 and 0 of all matches."""
     letter_match_arr = []
     for i in range(0, len(secret_word)):
         if secret_word[i] == letter:
@@ -27,6 +30,7 @@ def check_word(secret_word, letter):
 
 
 def get_input(guessed_word):
+    """Get input as 1 letter from the player."""
     global guesses_left
     global guesses_arr
     global alphabet
@@ -49,6 +53,8 @@ def get_input(guessed_word):
 
 
 def append_new_letters(guessed_word, letter_match_arr, new_guess):
+    """Add 1 letters to the guessed word."""
+    """Decrease life count if letter didn't match."""
     global guesses_left
     was_wrong = True
     for i in range(0, len(letter_match_arr)):
@@ -63,6 +69,7 @@ def append_new_letters(guessed_word, letter_match_arr, new_guess):
 
 
 def restart():
+    """Restart game."""
     global guesses_left
     global guesses_arr
     to_restart = input("Play again? y/n: ")
@@ -75,6 +82,7 @@ def restart():
 
 
 def hangman(secret_word):
+    """Play game."""
     global guesses_left
     global guesses_arr
     list(secret_word)
