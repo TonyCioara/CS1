@@ -1,7 +1,7 @@
 from student import Student
 
 
-class Classroom(Object):
+class Classroom:
     '''class of classroom object that will be populated with students
 
     Each classroom object has the following attributes:
@@ -42,31 +42,6 @@ class Classroom(Object):
                         If False ask for new input
                         If yes add assignment to student
 
-        get_assignment_name_clasroom(self):
-            is_complete = 0
-            While is_complete is False
-                get inport for assignment_name
-                is_complete = 1
-                Run through array of students_array
-                    check if assignment_name exists
-                        if True is_complete = 0
-
-        get_assignment_name_student(self, student):
-            is_complete = 0
-            While is_complete is False
-                get inport for assignment_name
-                is_complete = 1
-                check if assignment_name exists
-                    if True is_complete = 0
-
-        display_student(self):
-            Ask for student name
-            Print all assignments, grades, and GPA
-
-        display_classroom(self):
-            Print every student in a new line, alongside assignments, grades,
-            and GPA
-
         edit_student(self):
             input student name
             get_assignment_name_student(student)
@@ -81,7 +56,88 @@ class Classroom(Object):
         delete_assignment_student(self):
             Input assignment name
             Check if assignment is in assignments dictionary
-                Remove assigment
+                Remove assigment'''
+
+    def __init__(self, classroom_name, teacher_name):
+        self.classroom_name = classroom_name
+        self.teacher_name = teacher_name
+        self.roster = {}
+        self.student_ID_count = 0
+
+    def create_student(self, student_name):
+        for student in self.roster.values():
+            if student_name in student.name:
+                print("Student already exists.")
+                return()
+        self.student_ID_count += 1
+        print("New student id:", self.student_ID_count)
+        current_student = Student(student_name, self.student_ID_count)
+        self.roster[current_student.student_ID] = current_student
+
+    def add_assignment_student(self, current_student, assignment_name, grade):
+        for student in self.roster.values():
+            if student.name == current_student:
+                if assignment_name not in student.assignments.values():
+                    student.add_assignment(assignment_name, grade)
+                    print("assignment added")
+                    return()
+
+    def add_assignment_classroom(self, assignment_name, grade):
+        for student in self.roster.values():
+            if assignment_name not in student.assignments.values():
+                student.add_assignment(assignment_name, grade)
+                print("assignment added")
+
+    def delete_assignment_student(self, current_student, assignment_name):
+        for student in self.roster.values():
+            if student.name == current_student:
+                if assignment_name in student.assignments:
+                    del student.assignments[assignment_name]
+                    return()
+
+    def delete_assignment_classroom(self, assignment_name):
+        for student in self.roster.values():
+            if assignment_name in student.assignments:
+                del student.assignments[assignment_name]
+
+    def edit_student_assignment(self, current_student, assignment_name, grade):
+        for student in self.roster.values():
+            if student.name == current_student:
+                for assignment in student.assignments:
+                    if assignment == assignment_name:
+                        student.assignments[assignment] = grade
+                        print("assignment modified")
+                        return()
 
 
-    '''
+classroom_1 = Classroom("Math", "Fred")
+print(classroom_1.classroom_name)
+
+classroom_1.create_student("John")
+
+classroom_1.add_assignment_student("John", "Pizza", 5)
+john = classroom_1.roster[1]
+print(john.assignments)
+
+classroom_1.create_student("Tony")
+print(classroom_1.roster.values)
+
+classroom_1.add_assignment_student("Tony", "Pasta", 7)
+tony = classroom_1.roster[2]
+print(tony.assignments)
+
+classroom_1.edit_student_assignment("John", "Pizza", 35)
+john = classroom_1.roster[1]
+print(john.assignments)
+
+classroom_1.delete_assignment_student("John", "Pizza")
+john = classroom_1.roster[1]
+print(john.assignments)
+
+classroom_1.add_assignment_classroom("Beer", 100)
+tony = classroom_1.roster[2]
+print(tony.assignments)
+
+classroom_1.delete_assignment_classroom("Beer")
+tony = classroom_1.roster[2]
+print(tony.assignments)

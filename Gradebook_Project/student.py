@@ -1,4 +1,4 @@
-class Student(Object):
+class Student:
     '''Class of student objects that will populate each class roster.
 
     Each student object contains the following attributes:
@@ -50,17 +50,17 @@ class Student(Object):
         self.grade_in_class = None
         self.assignments = {}
 
-    def _update_grade_in_class():
+    def _update_grade_in_class(self):
         point_total = sum(list(self.assignments.values()))
         num_assignments = len(self.assignments)
         self.grade_in_class = (point_total / num_assignments)
 
-    def update_grade_for_assignment(self, assignment_name, grade):
+    def update_assignment_grade(self, assignment_name, grade):
         self.assignments[assignment_name] = grade
 
     def delete_assignment(self, assignment_name):
         del(self.assignments[assignment_name])
 
     def add_assignment(self, assignment_name, grade):
-        self.assignments[name] = grade
+        self.assignments[assignment_name] = grade
         self._update_grade_in_class()
