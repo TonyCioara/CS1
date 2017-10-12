@@ -50,17 +50,20 @@ class Student:
         self.grade_in_class = None
         self.assignments = {}
 
-    def _update_grade_in_class(self):
+    def update_grade_in_class(self):
         point_total = sum(list(self.assignments.values()))
         num_assignments = len(self.assignments)
-        self.grade_in_class = (point_total / num_assignments)
+        if num_assignments != 0:
+            self.grade_in_class = (point_total / num_assignments)
 
     def update_assignment_grade(self, assignment_name, grade):
         self.assignments[assignment_name] = grade
+        self.update_grade_in_class()
 
     def delete_assignment(self, assignment_name):
         del(self.assignments[assignment_name])
+        self.update_grade_in_class()
 
     def add_assignment(self, assignment_name, grade):
         self.assignments[assignment_name] = grade
-        self._update_grade_in_class()
+        self.update_grade_in_class()

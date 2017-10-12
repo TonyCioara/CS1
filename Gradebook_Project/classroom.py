@@ -63,6 +63,7 @@ class Classroom:
         self.teacher_name = teacher_name
         self.roster = {}
         self.student_ID_count = 0
+        self.classroom_gpa = 0
 
     def create_student(self, student_name):
         for student in self.roster.values():
@@ -109,6 +110,16 @@ class Classroom:
                         print("assignment modified")
                         return()
 
+    def update_gpa_classroom(self):
+        class_total = 0
+        student_count = len(self.roster)
+        for student in self.roster.values():
+            student.update_grade_in_class()
+            class_total += student.grade_in_class
+            if student.grade_in_class == 0:
+                student_count -= 1
+        self.classroom_gpa = class_total / student_count
+
 
 classroom_1 = Classroom("Math", "Fred")
 print(classroom_1.classroom_name)
@@ -141,3 +152,7 @@ print(tony.assignments)
 classroom_1.delete_assignment_classroom("Beer")
 tony = classroom_1.roster[2]
 print(tony.assignments)
+
+classroom_1.update_gpa_classroom()
+print("====")
+print(classroom_1.classroom_gpa)
