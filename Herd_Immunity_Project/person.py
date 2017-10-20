@@ -1,5 +1,7 @@
 import random
+random.seed(42)
 # TODO: Import the virus clase
+
 
 class Person(object):
     '''
@@ -41,17 +43,22 @@ class Person(object):
             is_vaccinated attribute is changed to True, and set self.infected to None.
     '''
 
-    def __init__(self, _id, is_vaccinated, infected=None):
+    def __init__(self, _id, is_vaccinated, infected):
         # TODO:  Finish this method.  Follow the instructions in the class documentation
         # to set the corret values for the following attributes.
-        self._id = None
-        self.is_vaccinated = None
-        self.is_alive = None
-        self.infected = None
+        self._id = _id
+        self.is_vaccinated = is_vaccinated
+        self.is_alive = True
+        self.infected = infected
 
-
-    def did_survive_infection():
+    def did_survive_infection(self, mortality_rate):
         # TODO:  Finish this method. Follow the instructions in the class documentation
         # for resolve_infection.  If person dies, set is_alive to False and return False.
-        # If person lives, set is_vaccinated = True, infected = None, return True.  
-        pass
+        # If person lives, set is_vaccinated = True, infected = None, return True.
+        rand_num = random.random()
+        if rand_num < mortality_rate:
+            self.is_alive = False
+            return False
+        else:
+            self.is_vaccinated = True
+            return True
