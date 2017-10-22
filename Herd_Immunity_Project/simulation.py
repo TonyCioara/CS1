@@ -75,7 +75,7 @@ class Simulation(object):
         self.initial_infected = initial_infected
         self.virus = virus
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
-            virus_name, population_size, vacc_percentage, initial_infected)
+            virus.name, population_size, vacc_percentage, initial_infected)
 
         # TODO: Create a Logger object and bind it to self.logger.  You should use this
         # logger object to log all events of any importance during the simulation.  Don't forget
@@ -99,9 +99,9 @@ class Simulation(object):
         # people vaccinated, correct number of initially infected people).
         population = []
         infected_count = 0
-        while len(population) != pop_size:
+        while len(population) != self.population_size:
 
-            if infected_count != initial_infected:
+            if infected_count != self.initial_infected:
                 # TODO: Create all the infected people first, and then worry about the rest.
                 # Don't forget to increment infected_count every time you create a
                 # new infected person!
@@ -114,7 +114,7 @@ class Simulation(object):
                 # should be created as a vaccinated person. If not, the person should be
                 # created as an unvaccinated person.
                 rand_num = random.random()
-                if rand_num < vacc_percentage:
+                if rand_num < self.vacc_percentage:
                     population.append(Person(self.next_person_id, True, False))
                 else:
                     population.append(Person(self.next_person_id, False, False))
@@ -171,6 +171,7 @@ class Simulation(object):
             if self.population[index].is_alive is True:
                 people_still_alive += 1
         print(people_still_alive, "people have survived the virus")
+        print("Steps made:", )
 
 
 
@@ -189,19 +190,19 @@ class Simulation(object):
         #               - Call simulation.interaction(person, random_person)
         #               - Increment interaction counter by 1.
         for index in range(0, len(self.population)):
-            if self.population[index].infected is True and self.population[index].is_alive is True:
+            if self.population[index].infected is True:
                 index_2 = 0
                 while index_2 < 100:
                     rand_num = random.randint(0, len(self.population) - 1)
                     if self.population[rand_num].is_alive is True:
-                        to_infect = self.interaction(self.population[index], self.population[rand_num])
+                        to_infect = self.interaction(self.population[rand_num])
                         if to_infect is True:
                             self.newly_infected.append(rand_num)
                         index_2 += 1
                 self.population[index].did_survive_infection(virus.mortality_rate)
 
 
-    def interaction(self, person, random_person):
+    def interaction(self, random_person):
         # TODO: Finish this method! This method should be called any time two living
         # people are selected for an interaction.  That means that only living people
         # should be passed into this method.  Assert statements are included to make sure
@@ -263,7 +264,7 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     params = sys.argv[1:]
-    pop_size = 100000
+    pop_size = 3000
     vacc_percentage = 0
     virus_name = "Ebola"
     mortality_rate = 0.4

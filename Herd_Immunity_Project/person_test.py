@@ -1,7 +1,7 @@
 from person import *
 from virus import *
 
-"""
+'''
 def create_person():
     virus1 = Virus("Ebola", 0.3, 0.5)
     return Person(5, True, virus1)
@@ -21,4 +21,4 @@ def test_did_survive_infection():
         assert test_subject.is_vaccinated is True
     else:
         assert test_subject.is_alive is False
-"""
+'''
