@@ -193,6 +193,7 @@ class Simulation(object):
             if self.population[index].infected is True:
                 index_2 = 0
                 while index_2 < 100:
+                    print(index_2)
                     rand_num = random.randint(0, len(self.population) - 1)
                     if self.population[rand_num].is_alive is True:
                         to_infect = self.interaction(self.population[rand_num])
@@ -207,7 +208,6 @@ class Simulation(object):
         # people are selected for an interaction.  That means that only living people
         # should be passed into this method.  Assert statements are included to make sure
         # that this doesn't happen.
-        assert person.is_alive is True
         assert random_person.is_alive is True
 
         # The possible cases you'll need to cover are listed below:
@@ -241,7 +241,7 @@ class Simulation(object):
         # NOTE: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list!
         for index in self.newly_infected:
-            self.population[index].infected is True
+            self.population[index].infected = True
             self.total_infected += 1
         self.newly_infected = []
 
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     pop_size = 3000
     vacc_percentage = 0
     virus_name = "Ebola"
-    mortality_rate = 0.4
+    mortality_rate = 0.1
     basic_repro_num = 0.8
     virus = Virus(virus_name, basic_repro_num, mortality_rate)
     initial_infected = 1

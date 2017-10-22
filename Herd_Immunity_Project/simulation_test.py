@@ -1,4 +1,5 @@
 from simulation import Simulation
+from person import Person
 from virus import Virus
 
 
@@ -38,6 +39,8 @@ def test_simulation_should_continue():
     should_continue = simulation_instance._simulation_should_continue()
     assert should_continue is False
 
-
+"""
 def test_interaction():
-    person = Person(1, False, True)
+    person_1 = Person(1, False, True)
+    person_2 = Person(1, True, False)
+    person_1_interaction = person_1.interaction"""
