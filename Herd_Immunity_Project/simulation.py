@@ -80,7 +80,7 @@ class Simulation(object):
         # TODO: Create a Logger object and bind it to self.logger.  You should use this
         # logger object to log all events of any importance during the simulation.  Don't forget
         # to call these logger methods in the corresponding parts of the simulation!
-        self.logger = None
+        self.logger = Logger('log_simulation.txt')
 
         # This attribute will be used to keep track of all the people that catch
         # the infection during a given time step. We'll store each newly infected
@@ -171,11 +171,8 @@ class Simulation(object):
             if self.population[index].is_alive is True:
                 people_still_alive += 1
         print(people_still_alive, "people have survived the virus")
-        print("Steps made:", )
-
-
-
-        #print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
+        print('The simulation has ended after', time_step_counter, 'turns.')
+        self.logger.log_time_step(time_step_counter, people_still_alive)
 
     def time_step(self):
         # TODO: Finish this method!  This method should contain all the basic logic
@@ -193,7 +190,6 @@ class Simulation(object):
             if self.population[index].infected is True:
                 index_2 = 0
                 while index_2 < 100:
-                    print(index_2)
                     rand_num = random.randint(0, len(self.population) - 1)
                     if self.population[rand_num].is_alive is True:
                         to_infect = self.interaction(self.population[rand_num])
@@ -201,6 +197,7 @@ class Simulation(object):
                             self.newly_infected.append(rand_num)
                         index_2 += 1
                 self.population[index].did_survive_infection(virus.mortality_rate)
+        self.logger.write_metadata(self.population_size, self.vacc_percentage, self.virus.name, self.virus.mortality_rate, self.virus.infection_rate)
 
 
     def interaction(self, random_person):
@@ -265,10 +262,10 @@ if __name__ == "__main__":
 if __name__ == "__main__":
     params = sys.argv[1:]
     pop_size = 3000
-    vacc_percentage = 0
+    vacc_percentage = 0.9
     virus_name = "Ebola"
-    mortality_rate = 0.1
-    basic_repro_num = 0.8
+    mortality_rate = 0.2
+    basic_repro_num = 0.2
     virus = Virus(virus_name, basic_repro_num, mortality_rate)
     initial_infected = 1
     simulation = Simulation(pop_size, vacc_percentage, virus, initial_infected)

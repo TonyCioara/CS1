@@ -1,0 +1,2 @@
+population: 3000; 90.0 percent of people got vaccinated; Ebola's mortality rate and basic reproduction number are 20.0 percent and 20.0 percent;
+The simulation ended after 20 steps; 2955 people are still alive; 
